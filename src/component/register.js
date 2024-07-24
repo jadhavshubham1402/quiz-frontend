@@ -1,5 +1,3 @@
-// LoginForm.js
-
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -43,7 +41,7 @@ const RegisterForm = () => {
 
             if (res.status == 200) {
                 successToast("User Created")
-                navigate("login")
+                navigate("/")
             }
             setLoader(false)
             setSubmitting(false)

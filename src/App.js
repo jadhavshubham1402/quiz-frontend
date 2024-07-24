@@ -10,6 +10,7 @@ import persistStore from 'redux-persist/es/persistStore';
 import HomePage from './component/home';
 import TopicSelection from './component/topicSelection';
 import Quiz from './component/quiz';
+import LeaderBoardTable from './component/leaderboard';
 
 function App() {
   let persistor = persistStore(store);
@@ -24,6 +25,7 @@ function App() {
               <Route path="/home" element={<HomePage />} />
               <Route path="/topic_selection" element={<TopicSelection />} />
               <Route path="/quiz" element={<Quiz />} />
+              <Route path="/leaderBoard" element={<LeaderBoardTable />} />
             </Routes>
           </BrowserRouter>
         </PersistGate>

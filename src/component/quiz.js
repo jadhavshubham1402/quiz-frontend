@@ -1,14 +1,12 @@
-// Quiz.js
-
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { errorToast, successToast } from '../toastConfig';
-import { getAllTopic } from '../service/axiosInstance';
+import { getAllTopic, updateScore } from '../service/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import { setCurrentQue } from '../redux/reducer/reducer';
 
 const Quiz = () => {
-    const { topic,currentQuestion } = useSelector((store) => store.auth);
+    const { topic, currentQuestion } = useSelector((store) => store.auth);
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [quizData, setQuizData] = useState([])
@@ -36,9 +34,21 @@ const Quiz = () => {
             setSelectedOption('');
             setIsAttempted(false)
         } else {
+            dispatch(setCurrentQue(0))
             setShowScore(true);
         }
     };
+
+    const updateUserScore = async () => {
+        try {
+            setLoader(true)
+            await updateScore({ topic, score })
+            setLoader(false)
+        } catch (error) {
+            setLoader(false)
+            errorToast(error?.response?.data?.message || error?.message)
+        }
+    }
 
     const restartQuiz = () => {
         dispatch(setCurrentQue(0))
@@ -63,9 +73,13 @@ const Quiz = () => {
     }
 
     useEffect(() => {
-        console.log(currentQuestion,"currentQuestion")
+        console.log(currentQuestion, "currentQuestion")
         getAllTopicData()
     }, [topic])
+
+    useEffect(() => {
+        updateUserScore()
+    }, [showScore])
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -77,7 +91,7 @@ const Quiz = () => {
                             You scored {score} out of {quizData.length} questions.
                         </p>
                         <button onClick={restartQuiz} className="linear hover:bg-[#2B7A0B]-600 active:bg-[#2B7A0B]-700 dark:bg-[#2B7A0B]-400 dark:hover:bg-[#2B7A0B]-300 dark:active:bg-[#2B7A0B]-200 mt-2 w-full rounded-xl bg-[#2B7A0B] py-[8px] text-lg font-medium text-white transition duration-200 dark:text-white">Restart Quiz</button>
-                        <button onClick={()=>navigate("/home")} className="linear hover:bg-[#2B7A0B]-600 active:bg-[#2B7A0B]-700 dark:bg-[#2B7A0B]-400 dark:hover:bg-[#2B7A0B]-300 dark:active:bg-[#2B7A0B]-200 mt-2 w-full rounded-xl bg-[#2B7A0B] py-[8px] text-lg font-medium text-white transition duration-200 dark:text-white">Back to Home</button>
+                        <button onClick={() => navigate("/home")} className="linear hover:bg-[#2B7A0B]-600 active:bg-[#2B7A0B]-700 dark:bg-[#2B7A0B]-400 dark:hover:bg-[#2B7A0B]-300 dark:active:bg-[#2B7A0B]-200 mt-2 w-full rounded-xl bg-[#2B7A0B] py-[8px] text-lg font-medium text-white transition duration-200 dark:text-white">Back to Home</button>
                     </div>
                 ) : (
                     <form onSubmit={handleFormSubmit}>

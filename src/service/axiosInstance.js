@@ -11,3 +11,11 @@ export const register = (data) => {
 export const getAllTopic = (data) => {
     return Axios.post("/api/getAllTopic", data);
 };
+
+export const getAllUser = (data) => {
+    return Axios.post("/api/getAllUser", data);
+};
+
+export const updateScore = (data) => {
+    return Axios.post("/api/updateScore", data);
+};

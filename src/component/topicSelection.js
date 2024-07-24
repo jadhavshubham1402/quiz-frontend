@@ -1,5 +1,3 @@
-// TopicSelection.js
-
 import React from 'react';
 import { setCurrentQue, setTopic } from '../redux/reducer/reducer';
 import { useNavigate } from 'react-router-dom';

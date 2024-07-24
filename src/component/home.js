@@ -1,60 +1,21 @@
-// LoginForm.js
-
 import React, { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import { FaEye, FaEyeSlash } from 'react-icons/fa6';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import LoaderComponent from './loader';
+import * as Yup from 'yup';
+import { logout, setToken, setUser } from '../redux/reducer/reducer';
 import { login } from '../service/axiosInstance';
 import { errorToast, successToast } from '../toastConfig';
-import { useDispatch } from 'react-redux';
-import { logout, setToken, setUser } from '../redux/reducer/reducer';
+import LoaderComponent from './loader';
 
 const HomePage = () => {
-    const [showPass, setShowPass] = useState(false);
     const [loader, setLoader] = useState(false)
     const navigate = useNavigate();
     const dispatch = useDispatch()
-    const initialValues = {
-        email: '',
-        password: ''
-    };
-
-    const validationSchema = Yup.object().shape({
-        email: Yup.string().email("Invalid Email").required('Email is required'),
-        password: Yup.string().min(8, "Password must be at least 8 characters")
-            .required("Password is required")
-            .matches(
-                /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$/,
-                'Password must contain at least one uppercase letter, one symbol, and one number'
-            ),
-    });
 
     const logOut = () => {
         dispatch(logout())
-        navigate("/login")
+        navigate("/")
     }
-
-    const handleLogin = async (values, { setSubmitting }) => {
-        try {
-            setLoader(true)
-            const res = await login(values)
-            console.log(res, "res")
-            if (res.status == 200) {
-                successToast("Login Successfully")
-                dispatch(setToken(res.data.token))
-                dispatch(setUser(res.data.user))
-                navigate("home")
-            }
-            setLoader(false)
-            setSubmitting(false)
-        } catch (error) {
-            setLoader(false)
-            setSubmitting(false)
-            errorToast(error?.response?.data?.message || error?.message)
-        }
-    };
 
     return (
         <>
