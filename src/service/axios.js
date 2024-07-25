@@ -9,7 +9,7 @@ const publicApisPath = [
 ];
 
 const Axios = axios.create({
-    baseURL: "http://localhost:5000/", //todo add .env
+    baseURL: process.env.REACT_APP_BASE_URL, //todo add .env
 });
 
 Axios.interceptors.request.use(

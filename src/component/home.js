@@ -1,14 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import * as Yup from 'yup';
-import { logout, setToken, setUser } from '../redux/reducer/reducer';
-import { login } from '../service/axiosInstance';
-import { errorToast, successToast } from '../toastConfig';
-import LoaderComponent from './loader';
+import { logout } from '../redux/reducer/reducer';
 
 const HomePage = () => {
-    const [loader, setLoader] = useState(false)
     const navigate = useNavigate();
     const dispatch = useDispatch()
 
@@ -19,7 +14,6 @@ const HomePage = () => {
 
     return (
         <>
-            {loader && <LoaderComponent />}
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
                 <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-md">
                     <div className="my-3 text-3xl font-bold text-center text-navy-700">Welcome the Quiz Competition</div>
