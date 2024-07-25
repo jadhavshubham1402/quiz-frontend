@@ -9,7 +9,7 @@ const publicApisPath = [
 ];
 
 const Axios = axios.create({
-    baseURL: "http://localhost:5000/", //todo add .env
+    baseURL: "https://music-album-peach-six.vercel.app//", //todo add .env
 });
 
 Axios.interceptors.request.use(
