@@ -7,6 +7,7 @@ const LoaderComponent = () => {
         borderColor: "red",
     };
 
+    
     return (
         <div className="sweet-loading w-screen h-screen bg-slate-300 absolute z-10">
             <FadeLoader
